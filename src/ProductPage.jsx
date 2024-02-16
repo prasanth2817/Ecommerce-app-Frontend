@@ -57,7 +57,7 @@ function ProductPage() {
                 <Card className="card-contents " style={{ width: "100%" }}>
                   <Card.Img
                     variant="top"
-                    src={`${import.meta.env.VITE_API_URL}/Images/${product.image}`}
+                    src={`https://e-commerce-app-qlsz.onrender.com/Images/${product.image}`}
                   />
                   <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
