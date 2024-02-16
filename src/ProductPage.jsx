@@ -57,7 +57,7 @@ function ProductPage() {
                 <Card className="card-contents " style={{ width: "100%" }}>
                   <Card.Img
                     variant="top"
-                    src={`http://localhost:8000/Images/${product.image}`}
+                    src={`${import.meta.env.VITE_API_URL}/Images/${product.image}`}
                   />
                   <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
