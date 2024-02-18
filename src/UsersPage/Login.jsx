@@ -6,10 +6,12 @@ import  {useNavigate} from 'react-router-dom';
 import AxiosService from '../Common/ApiService';
 import {toast} from 'react-toastify'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Context/AuthContext';
 
 function Login() {
     let [email,setEmail]=useState("")
     let [password,setPassword]=useState("")
+    const { setIsLoggedIn } = useAuth();
     const navigate= useNavigate();
 
 const validateLogin=async(e)=>{
@@ -19,6 +21,7 @@ try {
     if(res.status===200){
         toast.success(res.data.message)
         sessionStorage.setItem("token",res.data.token)
+        setIsLoggedIn(true)
         navigate("/")
     }
 } catch (error) {

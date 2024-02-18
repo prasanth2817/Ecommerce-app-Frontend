@@ -13,6 +13,8 @@ import Login from "../UsersPage/Login";
 import SignUp from "../UsersPage/CreateUser";
 import ForgotPassword from "../UsersPage/ForgotPassword";
 import ResetPassword from "../UsersPage/ResetPassword";
+import UserProfile from "../UsersPage/UserProfile";
+import ProductByCategory from "../ProductByCategory";
 
 function AppRoutes() {
   return (
@@ -21,6 +23,7 @@ function AppRoutes() {
     <NavBar /> 
     <Routes>
       <Route path="/productpage" element={<ProductPage />} /> 
+      <Route path="/allproducts" element={<ProductByCategory />} /> 
       <Route path="/productInformation/:id" element={<ProductInformation />} /> 
       <Route path="/CartPage" element={<CartPage />} /> 
       <Route path="/addproduct" element={<CreateProduct />} /> 
@@ -28,6 +31,7 @@ function AppRoutes() {
       <Route path="/signUp" element={<SignUp />} /> 
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} /> 
+      <Route path="/profile" element={<UserProfile />} /> 
       <Route path="/" element={<Home />} /> 
     </Routes>
     <Footer />

@@ -1,13 +1,13 @@
 import React from 'react'
 import { useState } from 'react'
-import Cardimage1 from "../Images/card1-image.png"
-import Cardimage2 from "../Images/card2-image.png"
-import Cardimage3 from "../Images/card3-image.jpg"
-import Cardimage4 from "../Images/card4-image.jpg"
-import Cardimage5 from "../Images/card5-image.png"
-import Cardimage6 from "../Images/card6-image.png"
-import Cardimage7 from "../Images/card7-image.png"
-import Cardimage8 from "../Images/card8-image.png"
+import Cardimage1 from "../Images/Causual-shoes.jpeg"
+import Cardimage2 from "../Images/Kurtas.jpeg"
+import Cardimage3 from "../Images/SweatShirts.jpeg"
+import Cardimage4 from "../Images/T-Shirts.jpeg"
+import Cardimage5 from "../Images/Tracks.jpeg"
+import Cardimage6 from "../Images/Shirts.jpeg"
+import Cardimage7 from "../Images/pants.jpeg"
+import Cardimage8 from "../Images/Sarees.jpeg"
 export const DashboardDataContext= React.createContext(null)
 
 function DashboardContext({children}) {
@@ -16,7 +16,7 @@ function DashboardContext({children}) {
         title: "Causual Shoes",
         imageUrl: Cardimage1,
         category:"Mens",
-        style:"shoes"
+        style:"CausualShoes"
     },{
         id:1,
         title: "Kurtas",
@@ -38,13 +38,13 @@ function DashboardContext({children}) {
     },{
         id:4,
         title: "Track Pants",
-        imageUrl: Cardimage6,
+        imageUrl: Cardimage5,
         category:"Mens",
         style:"TrackPants"
     },{
         id:5,
         title: "Shirts",
-        imageUrl: Cardimage5,
+        imageUrl: Cardimage6,
         category:"Mens",
         style:"Shirts"
     },{
@@ -55,9 +55,9 @@ function DashboardContext({children}) {
         style:"Pants"
     },{
         id:7,
-        title: "Kids Wears",
+        title: "Sarees",
         imageUrl: Cardimage8,
-        category:"kidsWears",
+        category:"Sarees",
         style:"combos"
     },])
   return <DashboardDataContext.Provider value={{data,setData}}>

@@ -1,77 +1,162 @@
-import React from 'react'
-import { Formik} from 'formik'
-import * as Yup from 'yup';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import { useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify'
-import { useState } from 'react';
-import axios from 'axios';
-import {FormCheck } from "react-bootstrap";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import Button from "react-bootstrap/Button";
+import FormLabel from "react-bootstrap/FormLabel";
+import FormControl from "react-bootstrap/FormControl";
+import FormCheck from "react-bootstrap/FormCheck";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function CreateProduct() {
-  const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    price: '',
-    category: '',
-    style: '',
-    color: '',
-    size: '',
-    quantity: '',
+  const initialValues = {
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    style: "",
+    color: "",
+    size: "",
+    quantity: "",
     shipping: false,
     image: null,
+  };
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    description: Yup.string().required("Description is required"),
+    price: Yup.number().required("Price is required"),
+    category: Yup.string().required("Category is required"),
+    style: Yup.string().required("Style is required"),
+    color: Yup.string().required("Color is required"),
+    size: Yup.string().required("Size is required"),
+    quantity: Yup.number().required("Quantity is required"),
+    shipping: Yup.boolean().required("Shipping is required"),
+    image: Yup.mixed().required("Image is required"),
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setFormData({ ...formData, image: file });
-  };
-
-  const handleUpload = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const formDataToSend = new FormData();
-      for (const key in formData) {
-        formDataToSend.append(key, formData[key]);
+      const formData = new FormData();
+      for (const key in values) {
+        formData.append(key, values[key]);
       }
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/products/create`, formDataToSend, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/products/create`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       console.log(response.data);
-      // Handle success
-      toast.success('Product created successfully');
+      toast.success("Product created successfully");
     } catch (error) {
-      console.error('Error:', error);
-      // Handle error
-      toast.error('Error creating product');
+      console.error("Error:", error);
+      toast.error("Error creating product");
     }
+    setSubmitting(false);
   };
-  
 
   return (
-    <div>
+    <div className="container products-text">
       <h1>Create Product</h1>
-      <form onSubmit={handleUpload}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleInputChange} />
-        <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleInputChange} />
-        <input type="number" name="price" placeholder="Price" value={formData.price} onChange={handleInputChange} />
-        <input type="text" name="category" placeholder="Category" value={formData.category} onChange={handleInputChange} />
-        <input type="text" name="style" placeholder="Style" value={formData.style} onChange={handleInputChange} />
-        <input type="text" name="color" placeholder="Color" value={formData.color} onChange={handleInputChange} />
-        <input type="text" name="size" placeholder="Size" value={formData.size} onChange={handleInputChange} />
-        <input type="text" name="quantity" placeholder="Quantity" value={formData.quantity} onChange={handleInputChange} />
-        <input type="checkbox" name="shipping" checked={formData.shipping} onChange={() => setFormData({ ...formData, shipping: !formData.shipping })} />
-        <input type="file" name="image" onChange={handleFileChange} />
-        <button type="submit">Submit</button>
-      </form>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <FormLabel htmlFor="name">Name</FormLabel>
+            <Field
+              type="text"
+              name="name"
+              as={FormControl}
+              placeholder="Name"
+            />
+            <ErrorMessage name="name" component="div" />
+
+            <FormLabel htmlFor="description">Description</FormLabel>
+            <Field
+              type="text"
+              name="description"
+              as={FormControl}
+              placeholder="Description"
+            />
+            <ErrorMessage name="description" component="div" />
+
+            <FormLabel htmlFor="price">Price</FormLabel>
+            <Field
+              type="number"
+              name="price"
+              as={FormControl}
+              placeholder="Price"
+            />
+            <ErrorMessage name="price" component="div" />
+
+            <FormLabel htmlFor="category">Category</FormLabel>
+            <Field
+              type="text"
+              name="category"
+              as={FormControl}
+              placeholder="Category"
+            />
+            <ErrorMessage name="category" component="div" />
+
+            <FormLabel htmlFor="style">Style</FormLabel>
+            <Field
+              type="text"
+              name="style"
+              as={FormControl}
+              placeholder="Style"
+            />
+            <ErrorMessage name="style" component="div" />
+
+            <FormLabel htmlFor="color">Color</FormLabel>
+            <Field
+              type="text"
+              name="color"
+              as={FormControl}
+              placeholder="Color"
+            />
+            <ErrorMessage name="color" component="div" />
+
+            <FormLabel htmlFor="size">Size</FormLabel>
+            <Field
+              type="text"
+              name="size"
+              as={FormControl}
+              placeholder="Size"
+            />
+            <ErrorMessage name="size" component="div" />
+
+            <FormLabel htmlFor="quantity">Quantity</FormLabel>
+            <Field
+              type="number"
+              name="quantity"
+              as={FormControl}
+              placeholder="Quantity"
+            />
+            <ErrorMessage name="quantity" component="div" />
+
+            <FormCheck>
+              <FormLabel>Shipping</FormLabel>
+              <Field type="checkbox" name="shipping" as={FormCheck.Input} />
+            </FormCheck>
+            <ErrorMessage name="shipping" component="div" />
+
+            <FormLabel htmlFor="image">Image</FormLabel>
+            <Field type="file" name="image" as={FormControl} />
+            <ErrorMessage name="image" component="div" />
+
+            <Button type="submit" disabled={isSubmitting}>
+              Submit
+            </Button>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
 }

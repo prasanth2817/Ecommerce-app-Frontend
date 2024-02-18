@@ -18,7 +18,7 @@ function SignUp() {
         try {
             const res= await AxiosService.post("/user/register",{firstName,lastName,email,password})
             if(res.status===201){
-              navigate("/")
+              navigate("/login")
               toast.success(res.data.message);
             } 
         } catch (error) {

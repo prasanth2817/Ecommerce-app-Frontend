@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Spinner from "react-bootstrap/Spinner";
 import ProductPlaceholder from "./Images/product-placeholder.jpeg";
 
-function ProductPage() {
+function ProductByCategory() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -14,13 +14,12 @@ function ProductPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
-  const style = queryParams.get("style");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `https://e-commerce-app-qlsz.onrender.com/products?category=${category}&style=${style}`
+          `https://e-commerce-app-qlsz.onrender.com/products/allproducts?category=${category}`
         );
         setProducts(response.data.product);
       } catch (error) {
@@ -30,16 +29,13 @@ function ProductPage() {
       }
     };
     fetchProducts();
-  }, [category, style]);
+  }, [category]);
 
   if (loading) {
     return (
-      <div>
-        <h4>Please wait, it takes some time</h4>
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </div>
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
     );
   }
 
@@ -57,12 +53,9 @@ function ProductPage() {
     }
     return <div>{errorMessage}</div>;
   }
-
   return (
-    <div>
-      <div className="container products-text">
-        Products({products.length} Items Found)
-      </div>
+    <div className="container products-text">
+      <div>Products({products.length} Items Found)</div>
       {products.length > 0 ? (
         <div className="container">
           <div className="row">
@@ -80,7 +73,7 @@ function ProductPage() {
                         : ProductPlaceholder
                     }
                   />
-                  <Card.Body className="products-text">
+                  <Card.Body>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Title>Rs. {product.price}</Card.Title>
                     <Link to={`/productInformation/${product._id}`}>
@@ -99,4 +92,4 @@ function ProductPage() {
   );
 }
 
-export default ProductPage;
+export default ProductByCategory;

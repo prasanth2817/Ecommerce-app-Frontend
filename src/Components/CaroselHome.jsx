@@ -9,25 +9,21 @@ function CarouselHome() {
   return (
     <Carousel className='Container carosel' interval={carouselInterval}>
       <Carousel.Item>
-        <CarouselImage text="First slide" imageUrl={carouselImage1} />
+        <CarouselImage  text="First slide" imageUrl={carouselImage1} />
         <Carousel.Caption>
-          <h3></h3>
-          <p></p>
+          <a href="/productpage?category=Mens&style=Pants">Click Here</a>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <CarouselImage text="Second slide" imageUrl={carouselImage2} />
         <Carousel.Caption>
-          <h3></h3>
-          <p></p>
+        <a href="/productpage?category=Mens&style=Shirts">Click Here</a>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
         <CarouselImage text="Third slide" imageUrl={carouselImage3} />
         <Carousel.Caption>
-          <h3></h3>
-          <p>
-          </p>
+        <a href="/productpage?category=Mens&style=CausualShoes">Click Here</a>
         </Carousel.Caption>
       </Carousel.Item>
     </Carousel>
