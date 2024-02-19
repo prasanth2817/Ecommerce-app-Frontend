@@ -97,7 +97,7 @@ function ProductInformation() {
                 <Carousel.Item key={index}>
                   <CarouselImage
                     text={`Image ${index + 1}`}
-                    imageUrl={`http://localhost:8000/Images/${image}`}
+                    imageUrl={`https://e-commerce-app-qlsz.onrender.com/Images/${image}`}
                   />
                   <Carousel.Caption>
                     <h3></h3>

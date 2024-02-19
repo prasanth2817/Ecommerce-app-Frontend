@@ -48,7 +48,7 @@ function CartPage() {
                   <div>
                     <Card.Img
                       variant="top"
-                      src={`http://localhost:8000/Images/${item.images[0]}`}
+                      src={`https://e-commerce-app-qlsz.onrender.com/Images/${item.images[0]}`}
                       style={{ width: "100%" }}
                     />
                   </div>

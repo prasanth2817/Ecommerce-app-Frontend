@@ -69,7 +69,7 @@ function ProductByCategory() {
                     variant="top"
                     src={
                       product.images?.[0]
-                        ? `http://localhost:8000/Images/${product.images[0]}`
+                        ? `https://e-commerce-app-qlsz.onrender.com/Images/${product.images[0]}`
                         : ProductPlaceholder
                     }
                   />
