@@ -218,3 +218,12 @@ ul li {
     font-size: 48px; /* Adjust font size for medium screens */
   }
 }
+@media (min-width: 375px) and (max-width: 577px) {
+  .cart-page{
+    display: inline-block;
+    font-size: 24px; /* Adjust font size for medium screens */
+  }
+  .cart-style {
+    width: 100%;
+  }
+}
