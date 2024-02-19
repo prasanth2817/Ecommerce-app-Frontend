@@ -30,7 +30,7 @@ try {
     }
   return<>
   <div className='container login-page'>
-  <Card className='card-style' style={{ width: '32rem' }}>
+  <Card className='card-style' style={{ width: '100%' }}>
         <Card.Header>Login Page</Card.Header>
         <Card.Body>
         <Form >
