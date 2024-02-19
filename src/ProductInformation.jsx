@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { Button,Dropdown } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import Carousel from "react-bootstrap/Carousel";
 import { useAuth } from "./Context/AuthContext";
@@ -16,6 +16,7 @@ function ProductInformation() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { isLoggedIn } = useAuth();
+  const [selectedSize, setSelectedSize] = useState(null);
   const navigate = useNavigate();
   const carouselInterval = 3000;
 
@@ -81,55 +82,29 @@ function ProductInformation() {
   if (error || !product) {
     return <div>Error: {error ? error.message : "Product not found"}</div>;
   }
+  console.log(product);
   return (
     <div className="container products-text">
       <h1>{product.name}</h1>
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <Carousel className="Container carosel" interval={carouselInterval}>
-              <Carousel.Item>
-                <CarouselImage
-                  text="First slide"
-                  imageUrl={
-                    product.images?.[0]
-                      ? `http://localhost:8000/Images/${product.images[0]}`
-                      : ProductPlaceholder
-                  }
-                />
-                <Carousel.Caption>
-                  <h3></h3>
-                  <p></p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <CarouselImage
-                  text="Second slide"
-                  imageUrl={
-                    product.images?.[1]
-                      ? `http://localhost:8000/Images/${product.images[1]}`
-                      : ProductPlaceholder
-                  }
-                />
-                <Carousel.Caption>
-                  <h3></h3>
-                  <p></p>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <CarouselImage
-                  text="Third slide"
-                  imageUrl={
-                    product.images?.[2]
-                      ? `http://localhost:8000/Images/${product.images[2]}`
-                      : ProductPlaceholder
-                  }
-                />
-                <Carousel.Caption>
-                  <h3></h3>
-                  <p></p>
-                </Carousel.Caption>
-              </Carousel.Item>
+          <Carousel
+              className="Container carosel"
+              interval={carouselInterval}
+            >
+              {product.images.map((image, index) => (
+                <Carousel.Item key={index}>
+                  <CarouselImage
+                    text={`Image ${index + 1}`}
+                    imageUrl={`http://localhost:8000/Images/${image}`}
+                  />
+                  <Carousel.Caption>
+                    <h3></h3>
+                    <p></p>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              ))}
             </Carousel>
           </div>
           <div className="col-md-6">
@@ -137,8 +112,28 @@ function ProductInformation() {
             <p>{product.brand}</p>
             <h2>Description:</h2>
             <p>{product.description}</p>
+            <h2>Color:</h2>
+            <p>{product.color}</p>
             <h2>Price:</h2>
             <p>Rs.{product.price}</p>
+            <h2>Available sizes:</h2>
+            <p>{product.size}</p>
+            <h2>Choose a Size:</h2>
+            <Dropdown>
+  <Dropdown.Toggle variant="light">
+    {selectedSize ? selectedSize : "Select Size"}
+  </Dropdown.Toggle>
+  <Dropdown.Menu>
+    {product.size?.slice(1, -1).split(',').map((sizeOption, index) => (
+      <Dropdown.Item
+        key={index} // Use index as key since sizeOption might not be unique
+        onClick={() => setSelectedSize(sizeOption.trim())} // Trim whitespace from each size option
+      >
+        {sizeOption.trim()} {/* Display the size option */}
+      </Dropdown.Item>
+    ))}
+  </Dropdown.Menu>
+</Dropdown>
             <Button variant="dark" onClick={handleCart}>
               Add To Bag
             </Button>

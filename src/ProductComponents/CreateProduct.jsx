@@ -1,10 +1,11 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { Form,Field,ErrorMessage } from "formik";
+import { FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import FormLabel from "react-bootstrap/FormLabel";
-import FormControl from "react-bootstrap/FormControl";
-import FormCheck from "react-bootstrap/FormCheck";
+import { FormControl } from "react-bootstrap";
+import { FormCheck } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
 
@@ -29,7 +30,7 @@ function CreateProduct() {
     category: Yup.string().required("Category is required"),
     style: Yup.string().required("Style is required"),
     color: Yup.string().required("Color is required"),
-    size: Yup.string().required("Size is required"),
+    size: Yup.string().required("Size is required").oneOf(["s", "m", "l", "xl"], "Invalid size"),
     quantity: Yup.number().required("Quantity is required"),
     shipping: Yup.boolean().required("Shipping is required"),
     image: Yup.mixed().required("Image is required"),
@@ -122,15 +123,15 @@ function CreateProduct() {
               placeholder="Color"
             />
             <ErrorMessage name="color" component="div" />
-
-            <FormLabel htmlFor="size">Size</FormLabel>
-            <Field
-              type="text"
-              name="size"
-              as={FormControl}
-              placeholder="Size"
-            />
-            <ErrorMessage name="size" component="div" />
+            {/* <Form.Label>Size</Form.Label>
+<Field as="select" name="size" component={Form.Control}>
+  <option value="">Select Size</option>
+  <option value="s">Small</option>
+  <option value="m">Medium</option>
+  <option value="l">Large</option>
+  <option value="xl">Extra Large</option>
+</Field>
+<ErrorMessage name="size" component="div" /> */}
 
             <FormLabel htmlFor="quantity">Quantity</FormLabel>
             <Field

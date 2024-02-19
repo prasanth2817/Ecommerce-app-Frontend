@@ -93,9 +93,7 @@ function NavBar() {
           <span className="d-flex gap:3rem">
             <Dropdown>
               <Dropdown.Toggle variant="light" id="dropdown-basic">
-                <Button variant="light">
                   <i className="fa-solid fa-circle-user fa-2xl"></i>
-                </Button>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleAuthenticationChange}>

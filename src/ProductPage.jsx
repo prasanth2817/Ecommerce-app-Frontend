@@ -81,6 +81,7 @@ function ProductPage() {
                     }
                   />
                   <Card.Body className="products-text">
+                  <Card.Title>{product.brand}</Card.Title>
                     <Card.Title>{product.name}</Card.Title>
                     <Card.Title>Rs. {product.price}</Card.Title>
                     <Link to={`/productInformation/${product._id}`}>

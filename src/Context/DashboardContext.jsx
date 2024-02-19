@@ -57,8 +57,8 @@ function DashboardContext({children}) {
         id:7,
         title: "Sarees",
         imageUrl: Cardimage8,
-        category:"Sarees",
-        style:"combos"
+        category:"Womens",
+        style:"Sarees"
     },])
   return <DashboardDataContext.Provider value={{data,setData}}>
   {children}
