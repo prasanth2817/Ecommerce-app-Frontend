@@ -10,6 +10,7 @@ import MyVerticallyCenteredModal from "./Components/CheckoutModal";
 function CartPage() {
   const { cartItem, setCartItem } = useContext(CartDataContext);
   const [modalShow, setModalShow] = React.useState(false);
+  const [paymentMethod, setPaymentMethod] = useState(null);
   let navigate = useNavigate();
 
   // Function to remove an item from the cart
@@ -99,18 +100,29 @@ function CartPage() {
                   {calculateTotalPrice()}
                 </Card.Title>
                 <br />
-                <Form.Check type="radio" label="Cash On Delivery" />
+                <Form.Check
+                  type="radio"
+                  label="Cash On Delivery"
+                  checked={paymentMethod === "COD"}
+                  onChange={() => setPaymentMethod("COD")}
+                />
                 <Form.Check
                   disabled
                   type="radio"
                   label="UPI payments(comming soon)"
+                  checked={paymentMethod === "UPI"}
+                  onChange={() => setPaymentMethod("UPI")}
                 />
                 <br />
                 <MyVerticallyCenteredModal
                   show={modalShow}
                   onHide={() => setModalShow(false)}
                 />
-                <Button variant="success" onClick={() => setModalShow(true)}>
+                <Button
+                  variant="success"
+                  onClick={() => setModalShow(true)}
+                  disabled={!paymentMethod} // Disable checkout button if payment method is not selected
+                >
                   Checkout
                 </Button>
               </Card.Body>
