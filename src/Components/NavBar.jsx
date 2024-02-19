@@ -8,6 +8,7 @@ import { CartDataContext } from "../Context/CartContext";
 import Dropdown from "react-bootstrap/Dropdown";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
+import { Link } from 'react-router-dom';
 import { useAuth } from "../Context/AuthContext";
 
 function NavBar() {
@@ -72,12 +73,12 @@ function NavBar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link className="footer-text" href="/allproducts?category=Mens">
+            <Nav.Link className="footer-text" as={Link} to="/allproducts?category=Mens">
               Mens
             </Nav.Link>
             <Nav.Link
               className="footer-text"
-              href="/allproducts?category=Womens"
+              as={Link} to="/allproducts?category=Womens"
             >
               Womens
             </Nav.Link>
@@ -100,9 +101,9 @@ function NavBar() {
                   <i className="fa-solid fa-arrow-right-from-bracket"></i>{" "}
                   {isLoggedIn ? "Logout" : "Login"}
                 </Dropdown.Item>
-                <Dropdown.Item href="/profile">
-                  <i className="fa-solid fa-user"></i> Profile
-                </Dropdown.Item>
+                <Dropdown.Item as={Link} to="/profile">
+  <i className="fa-solid fa-user"></i> Profile
+</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 

@@ -118,7 +118,7 @@ function ProductInformation() {
             <p>Rs.{product.price}</p>
             <h2>Available sizes:</h2>
             <p>{product.size}</p>
-            <h2>Choose a Size:</h2>
+            {/* <h2>Choose a Size:</h2>
             <Dropdown>
   <Dropdown.Toggle variant="light">
     {selectedSize ? selectedSize : "Select Size"}
@@ -129,11 +129,11 @@ function ProductInformation() {
         key={index} // Use index as key since sizeOption might not be unique
         onClick={() => setSelectedSize(sizeOption.trim())} // Trim whitespace from each size option
       >
-        {sizeOption.trim()} {/* Display the size option */}
+        {sizeOption.trim()}
       </Dropdown.Item>
     ))}
   </Dropdown.Menu>
-</Dropdown>
+</Dropdown> */}
             <Button variant="dark" onClick={handleCart}>
               Add To Bag
             </Button>

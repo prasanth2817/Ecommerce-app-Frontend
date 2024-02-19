@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { CartDataContext } from "./Context/CartContext";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
+import Dropdown from 'react-bootstrap/Dropdown';
 import MyVerticallyCenteredModal from "./Components/CheckoutModal";
 
 function CartPage() {
@@ -20,7 +21,7 @@ function CartPage() {
 
   // Function to calculate the total price of items in the cart
   const calculateTotalPrice = () => {
-    return cartItem.reduce((total, item) => total + item.price, 0);
+    return cartItem.reduce((total, item) => total + (item.price), 0);
   };
 
   useEffect(() => {
@@ -52,6 +53,16 @@ function CartPage() {
                   </div>
                   <div>
                     <Card.Header>{item.brand}</Card.Header>
+                    <div className="container d-flex">
+    <Dropdown>
+    <Dropdown.Toggle variant="light" id="dropdown-basic">
+        {`QTY  ${1}`}
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item >1</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+    </div>
                     <Card.Body>
                       <Card.Text>{item.name}</Card.Text>
                       <Card.Text>Rs.{item.price}</Card.Text>
@@ -112,3 +123,4 @@ function CartPage() {
 }
 
 export default CartPage;
+
