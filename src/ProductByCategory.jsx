@@ -33,9 +33,12 @@ function ProductByCategory() {
 
   if (loading) {
     return (
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
+      <div>
+        <h4>Please wait, it takes some time</h4>
+        <Spinner animation="border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </Spinner>
+      </div>
     );
   }
 

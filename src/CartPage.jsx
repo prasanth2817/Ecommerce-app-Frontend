@@ -4,13 +4,15 @@ import Button from "react-bootstrap/Button";
 import { CartDataContext } from "./Context/CartContext";
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
-import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from "react-bootstrap/Dropdown";
 import MyVerticallyCenteredModal from "./Components/CheckoutModal";
 
 function CartPage() {
   const { cartItem, setCartItem } = useContext(CartDataContext);
   const [modalShow, setModalShow] = React.useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [error, setError] = useState(null);
+
   let navigate = useNavigate();
 
   // Function to remove an item from the cart
@@ -19,12 +21,22 @@ function CartPage() {
     setCartItem(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
-
   // Function to calculate the total price of items in the cart
   const calculateTotalPrice = () => {
-    return cartItem.reduce((total, item) => total + (item.price), 0);
+    return cartItem.reduce((total, item) => total + item.price, 0);
   };
-
+  const handleCheckout = async () => {
+    setModalShow(true);
+    try {
+      const userId = sessionStorage.getItem("userId");
+      const response = await axios.post(
+        "https://e-commerce-app-qlsz.onrender.com/orders/createorder",
+        { userId, products: cartItem }
+      );
+    } catch (error) {
+      setError(error);
+    }
+  };
   useEffect(() => {
     let existingCart = localStorage.getItem("cart");
     if (existingCart) {
@@ -54,16 +66,17 @@ function CartPage() {
                   </div>
                   <div>
                     <Card.Header>{item.brand}</Card.Header>
+                    <p>Selected Size: {item.size}</p>
                     <div className="container d-flex">
-    <Dropdown>
-    <Dropdown.Toggle variant="light" id="dropdown-basic">
-        {`QTY  ${1}`}
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item >1</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-    </div>
+                      <Dropdown>
+                        <Dropdown.Toggle variant="light" id="dropdown-basic">
+                          {`QTY  ${1}`}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item>1</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </div>
                     <Card.Body>
                       <Card.Text>{item.name}</Card.Text>
                       <Card.Text>Rs.{item.price}</Card.Text>
@@ -120,7 +133,7 @@ function CartPage() {
                 />
                 <Button
                   variant="success"
-                  onClick={() => setModalShow(true)}
+                  onClick={handleCheckout}
                   disabled={!paymentMethod} // Disable checkout button if payment method is not selected
                 >
                   Checkout
@@ -135,4 +148,3 @@ function CartPage() {
 }
 
 export default CartPage;
-

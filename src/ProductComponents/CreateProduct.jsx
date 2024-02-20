@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Form,Field,ErrorMessage } from "formik";
+import { Form, Field, ErrorMessage } from "formik";
 import { FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { FormControl } from "react-bootstrap";
@@ -30,7 +30,7 @@ function CreateProduct() {
     category: Yup.string().required("Category is required"),
     style: Yup.string().required("Style is required"),
     color: Yup.string().required("Color is required"),
-    size: Yup.string().required("Size is required").oneOf(["s", "m", "l", "xl"], "Invalid size"),
+    size: Yup.string().required("Size is required"),
     quantity: Yup.number().required("Quantity is required"),
     shipping: Yup.boolean().required("Shipping is required"),
     image: Yup.mixed().required("Image is required"),
@@ -123,6 +123,14 @@ function CreateProduct() {
               placeholder="Color"
             />
             <ErrorMessage name="color" component="div" />
+            <FormLabel htmlFor="Size">Size</FormLabel>
+            <Field
+              type="text"
+              name="size"
+              as={FormControl}
+              placeholder="Size should be given as S,M,L,XL for best experience"
+            />
+            <ErrorMessage name="size" component="div" />
             {/* <Form.Label>Size</Form.Label>
 <Field as="select" name="size" component={Form.Control}>
   <option value="">Select Size</option>
