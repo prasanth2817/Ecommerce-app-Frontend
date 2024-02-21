@@ -137,10 +137,10 @@ function ProductInformation() {
         Free Size
       </Dropdown.Item>
     ) : (
-      product.size[0][0].split(',').map((sizeOption, index) => (
+      product.size.split(',').map((sizeOption, index) => (
         <Dropdown.Item
           key={index}
-          onClick={() => setSelectedSize(sizeOption.trim())}
+          onClick={() => setSelectedSize(sizeOption)}
         >
           {sizeOption.trim()}
         </Dropdown.Item>
