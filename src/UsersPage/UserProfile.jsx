@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from "jwt-decode";
+import { CartDataContext } from '../Context/CartContext';
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
+  const { cartItem } = useContext(CartDataContext);
   let navigate= useNavigate();
 
   useEffect(() => {
@@ -33,6 +35,19 @@ function UserProfile() {
         </div>
       ) : (
         <p>Loading user data...</p>
+      )}
+      <h2>My Orders</h2>
+      {cartItem ? (
+        <div>
+          {cartItem.map((order, index) => (
+            <div key={index}>
+              <p>Order {index + 1}: {order.name} - Rs. {order.price}</p>
+             <p>Size : {order.size}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>Fetching Order details...</p>
       )}
     </div>
   );
