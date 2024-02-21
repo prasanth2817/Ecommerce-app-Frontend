@@ -1,4 +1,4 @@
-# React + Vite
+# E-Commerce Application
 
 The eCommerce Application is a full-stack web application that allows users to browse, search, and purchase products online. It provides features such as user authentication, product management, shopping cart functionality, checkout, and order tracking. The application is designed to provide a seamless and secure shopping experience for both customers and administrators
 
