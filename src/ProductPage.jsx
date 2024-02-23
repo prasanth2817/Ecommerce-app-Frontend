@@ -9,6 +9,7 @@ import ProductPlaceholder from "./Images/product-placeholder.jpeg";
 function ProductPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+ 
   const [error, setError] = useState(null);
 
   const location = useLocation();

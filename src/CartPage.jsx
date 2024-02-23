@@ -2,18 +2,40 @@ import React, { useContext, useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { CartDataContext } from "./Context/CartContext";
+import AxiosService from "./Common/ApiService"
 import Form from "react-bootstrap/Form";
 import { useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import MyVerticallyCenteredModal from "./Components/CheckoutModal";
+import {toast} from 'react-toastify';
+import {jwtDecode} from "jwt-decode";
 
 function CartPage() {
   const { cartItem, setCartItem } = useContext(CartDataContext);
+  const [userData, setUserData] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [error, setError] = useState(null);
 
   let navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      try {
+        const userDataFromToken = jwtDecode(token);
+        console.log(userDataFromToken);
+        setUserData(userDataFromToken);
+      } catch (error) {
+        console.error('Error decoding token:', error);
+        // Handle error, maybe clear sessionStorage or log out the user
+      }
+    } else {
+      toast.error("please login to view profile")
+      navigate("/login")
+    }
+  }, []);
+  console.log(userData);
 
   // Function to remove an item from the cart
   const removeFromCart = (productId) => {
@@ -25,18 +47,50 @@ function CartPage() {
   const calculateTotalPrice = () => {
     return cartItem.reduce((total, item) => total + item.price, 0);
   };
-  const handleCheckout = async () => {
-    setModalShow(true);
+
+  const handleCheckout = async (e) => {
+    e.preventDefault();
     try {
-      const userId = sessionStorage.getItem("userId");
-      const response = await axios.post(
-        "https://e-commerce-app-qlsz.onrender.com/orders/createorder",
-        { userId, products: cartItem }
-      );
+        // Ensure userData is not null before accessing its properties
+        if (!userData) {
+            throw new Error("User data not found. Please log in again.");
+        }
+        // Destructure email directly from userData
+        const { email } = userData;
+        // Ensure email is available
+        if (!email) {
+            throw new Error("User email not found. Please log in again.");
+        }
+        // Map cartItem to extract product IDs
+        const products = cartItem.map((item) => ({ productId: item._id }));
+
+        // Log products for debugging
+        console.log("Products:", products);
+
+        // Make the POST request to create order
+        const res = await AxiosService.post("/orders/createorder", { email, products });
+
+        // Check if the request was successful
+        if (res.status === 201) {
+            // Redirect to homepage
+            navigate("/");
+            // Display success message
+            toast.success(res.data.message);
+            // Show modal
+            setModalShow(true);
+        }
     } catch (error) {
-      setError(error);
+        // Log error for debugging
+        console.log(error);
+        // Display error message to the user
+        toast.error(error.response?.data?.error || "Error occurred! Please try again later.");
+        // Set error state for further handling
+        setError(error);
     }
-  };
+};
+
+
+
   useEffect(() => {
     let existingCart = localStorage.getItem("cart");
     if (existingCart) {
