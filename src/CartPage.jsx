@@ -24,7 +24,6 @@ function CartPage() {
     if (token) {
       try {
         const userDataFromToken = jwtDecode(token);
-        console.log(userDataFromToken);
         setUserData(userDataFromToken);
       } catch (error) {
         console.error('Error decoding token:', error);
@@ -35,7 +34,6 @@ function CartPage() {
       navigate("/login")
     }
   }, []);
-  console.log(userData);
 
   // Function to remove an item from the cart
   const removeFromCart = (productId) => {

@@ -7,15 +7,18 @@ import AxiosService from '../Common/ApiService';
 import {toast} from 'react-toastify'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
+import Spinner from "react-bootstrap/Spinner";
 
 function Login() {
     let [email,setEmail]=useState("")
     let [password,setPassword]=useState("")
+    const [loading, setLoading] = useState(false);
     const { setIsLoggedIn } = useAuth();
     const navigate= useNavigate();
 
 const validateLogin=async(e)=>{
         e.preventDefault()
+        setLoading(true)
 try {
     const res= await AxiosService.post("/user/login",{email,password})
     if(res.status===200){
@@ -26,8 +29,23 @@ try {
     }
 } catch (error) {
     toast.error(error.response.data.message || "Error Occoured! Please try after some time")
+} finally {
+  setLoading(false);
 }
     }
+
+    if (loading) {
+      return (
+        <div className='spinner-design'>
+          <h4>Validating user credentials!
+             Please wait...</h4>
+          <Spinner animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      );
+    }
+
   return<>
   <div className='container login-page'>
   <Card className='card-style' style={{ width: '100%' }}>

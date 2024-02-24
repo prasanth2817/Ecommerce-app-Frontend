@@ -227,3 +227,9 @@ ul li {
     width: 100%;
   }
 }
+.spinner-design{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

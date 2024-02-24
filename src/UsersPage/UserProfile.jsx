@@ -78,7 +78,7 @@ import { CartDataContext } from '../Context/CartContext';
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
-  const [orders, setOrders] = useState(null);
+  const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
   const { cartItem } = useContext(CartDataContext);
   const navigate = useNavigate();
@@ -99,17 +99,20 @@ function UserProfile() {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get('https://e-commerce-app-qlsz.onrender.com/orders/getorders');
-        setOrders(response.data); // Assuming response.data is an array of orders
-      } catch (error) {
-        setError(error);
-      }
-    };
-    fetchOrders();
-  }, []);
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       const email = userData.email.replace(/"/g, '');
+  //       const response = await axios.get(`https://e-commerce-app-qlsz.onrender.com/orders/getorders?email=${encodeURIComponent(email)}`);
+  //       setOrders(response.data.orders);
+  //     } catch (error) {
+  //       setError(error);
+  //     }
+  //   };
+  //   if (userData && userData.email) {
+  //     fetchOrders();
+  //   }
+  // }, [userData]);
 
   return (
     <div className="container">
@@ -122,28 +125,27 @@ function UserProfile() {
       ) : (
         <p>Loading user data...</p>
       )}
-      <h2>My Orders</h2>
-      {orders ? (
+      {/* <h2>My Orders</h2>
+      {orders.length > 0 ? (
         <div>
-          {orders.length > 0 ? (
-            orders.map((order, index) => (
-              <div key={index}>
-                <p>Order {index + 1}: {order.name} - Rs. {order.price}</p>
-                <p>Size : {order.size}</p>
-              </div>
-            ))
-          ) : (
-            <p>No orders found</p>
-          )}
+          {orders.map((order, index) => (
+            <div key={index}>
+              <p>Order {index + 1}: {order.name} - Rs. {order.price}</p>
+              <p>Size : {order.size}</p>
+            </div>
+          ))}
         </div>
       ) : (
-        <p>Fetching Order details...</p>
+        <p>No orders found</p>
       )}
-      {error && <p>Error fetching orders: {error.message}</p>}
+      {error && <p>Error fetching orders: {error.message}</p>} */}
     </div>
   );
 }
 
 export default UserProfile;
+
+
+
 
 
