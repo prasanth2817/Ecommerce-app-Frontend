@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { CartDataContext } from '../Context/CartContext';
+import AdminDashboard from '../Components/AdminDashboard';
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
@@ -49,6 +50,7 @@ function UserProfile() {
         <div>
           <p>Name: {userData.firstName} {userData.lastName}</p>
           <p>Email: {userData.email}</p>
+          {userData.role === 'admin' && <AdminDashboard />} {/* Render AdminDashboard if user role is admin */}
         </div>
       ) : (
         <p>Loading user data...</p>
