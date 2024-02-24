@@ -12,7 +12,7 @@ import {jwtDecode} from "jwt-decode";
 
 function CartPage() {
   const { cartItem, setCartItem } = useContext(CartDataContext);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState([]);
   const [modalShow, setModalShow] = React.useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [error, setError] = useState(null);
@@ -48,43 +48,7 @@ function CartPage() {
 
   const handleCheckout = async (e) => {
     e.preventDefault();
-    try {
-        // Ensure userData is not null before accessing its properties
-        if (!userData) {
-            throw new Error("User data not found. Please log in again.");
-        }
-        // Destructure email directly from userData
-        const { email } = userData;
-        // Ensure email is available
-        if (!email) {
-            throw new Error("User email not found. Please log in again.");
-        }
-        // Map cartItem to extract product IDs
-        const products = cartItem.map((item) => ({ productId: item._id }));
-
-        // Log products for debugging
-        console.log("Products:", products);
-
-        // Make the POST request to create order
-        const res = await AxiosService.post("/orders/createorder", { email, products });
-
-        // Check if the request was successful
-        if (res.status === 201) {
-            // Redirect to homepage
-            navigate("/");
-            // Display success message
-            toast.success(res.data.message);
-            // Show modal
-            setModalShow(true);
-        }
-    } catch (error) {
-        // Log error for debugging
-        console.log(error);
-        // Display error message to the user
-        toast.error(error.response?.data?.error || "Error occurred! Please try again later.");
-        // Set error state for further handling
-        setError(error);
-    }
+    setModalShow(true);
 };
 
 
@@ -174,7 +138,7 @@ function CartPage() {
                 <Form.Check
                   disabled
                   type="radio"
-                  label="UPI payments(comming soon)"
+                  label="UPI payments(Currently Unavailable)"
                   checked={paymentMethod === "UPI"}
                   onChange={() => setPaymentMethod("UPI")}
                 />
@@ -200,3 +164,39 @@ function CartPage() {
 }
 
 export default CartPage;
+
+// try {
+//   // Ensure userData is not null before accessing its properties
+//   if (!userData) {
+//       throw new Error("User data not found. Please log in again.");
+//   }
+//   // Destructure email directly from userData
+//   const email = userData.email;
+//   // Ensure email is available
+//   if (!email) {
+//       throw new Error("User email not found. Please log in again.");
+//   }
+//   // Map cartItem to extract product IDs
+//   const products = cartItem.map((item) => ({ productId: item._id }));
+
+//   // Log products for debugging
+//   console.log("Products:", products);
+// console.log(email);
+//   // Make the POST request to create order
+//   const response = await AxiosService.post("/orders/createorder", {email, products });
+
+//   // Check if the request was successful
+//   if (response.status === 201) {
+//       // Redirect to homepage
+      
+//       // Display success message
+//       toast.success(res.data.message);
+//   }
+// } catch (error) {
+//   // Log error for debugging
+//   console.log(error);
+//   // Display error message to the user
+//   toast.error(error.response?.data?.error || "Error occurred! Please try again later.");
+//   // Set error state for further handling
+//   setError(error);
+// }
