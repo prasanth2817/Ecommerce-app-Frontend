@@ -72,6 +72,11 @@ try {
     </Form>    
         </Card.Body>
       </Card>
+      <div>
+        <h4>For admin login</h4>
+        <h6>Email: admin123@gmail.com</h6>
+        <h6>password: admin@123</h6>
+        </div>
       </div>
   </>
 }
