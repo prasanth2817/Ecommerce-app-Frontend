@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -8,8 +8,8 @@ import { CartDataContext } from "../Context/CartContext";
 import Dropdown from "react-bootstrap/Dropdown";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
-import { Link } from 'react-router-dom';
-import { useAuth } from "../Context/AuthContext";
+import { Link } from "react-router-dom";
+import { useAuth } from "../Hooks/useAuth";
 
 function NavBar() {
   const { cartItem } = useContext(CartDataContext);
@@ -35,7 +35,7 @@ function NavBar() {
       setIsLoggedIn(false);
       setUserData(null);
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, setIsLoggedIn]);
 
   const openCart = () => {
     if (!isLoggedIn) {
@@ -73,12 +73,17 @@ function NavBar() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link className="footer-text" as={Link} to="/allproducts?category=Mens">
+            <Nav.Link
+              className="footer-text"
+              as={Link}
+              to="/allproducts?category=Mens"
+            >
               Mens
             </Nav.Link>
             <Nav.Link
               className="footer-text"
-              as={Link} to="/allproducts?category=Womens"
+              as={Link}
+              to="/allproducts?category=Womens"
             >
               Womens
             </Nav.Link>
@@ -94,7 +99,7 @@ function NavBar() {
           <span className="d-flex gap:3rem">
             <Dropdown>
               <Dropdown.Toggle variant="light" id="dropdown-basic">
-                  <i className="fa-solid fa-circle-user fa-2xl"></i>
+                <i className="fa-solid fa-circle-user fa-2xl"></i>
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleAuthenticationChange}>
@@ -102,8 +107,8 @@ function NavBar() {
                   {isLoggedIn ? "Logout" : "Login"}
                 </Dropdown.Item>
                 <Dropdown.Item as={Link} to="/profile">
-  <i className="fa-solid fa-user"></i> Profile
-</Dropdown.Item>
+                  <i className="fa-solid fa-user"></i> Profile
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 

@@ -2,14 +2,14 @@ import React, { useEffect, useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { CartDataContext } from '../Context/CartContext';
+// import { CartDataContext } from '../Context/CartContext';
 import AdminDashboard from '../Components/AdminDashboard';
 
 function UserProfile() {
   const [userData, setUserData] = useState(null);
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
-  const { cartItem } = useContext(CartDataContext);
+  // const [orders, setOrders] = useState([]);
+  // const [error, setError] = useState(null);
+  // const { cartItem } = useContext(CartDataContext);
   const navigate = useNavigate();
 
   useEffect(() => {
